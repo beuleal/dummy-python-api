@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "dummy-python-api"
+version = "0.1.0"
+description = "Dummy Python REST API with Prometheus"
+authors = ["Brenno Leal"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Flask = "^3.0.3"
+prometheus-client = "^0.20.0"
+autopep8 = "^2.3.1"
+flake8 = "^7.1.0"
+autoflake = "^2.3.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
