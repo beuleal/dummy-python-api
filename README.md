@@ -2,11 +2,21 @@
 
 This is a dummy Python REST API that has all HTTP methods available and randomly generates error.
 
-The main propose of this application is to have some inputs for Prometheus
+The main propose of this application is to have some inputs for Prometheus, Vector and Loki.
+
+There is no intention to run in a production environment, thats why we are not using a WSGI. If you do, I suggest to use gunicorn.
 
 ## Testing
 
 This repository has a script `test-api.sh` that make many requests to the API.
+
+## Enable Debug
+
+Just set the variable `DEBUG_MODE` in front of the command:
+
+```sh
+DEBUG_MODE=whatevervalue make run
+```
 
 ## Prometheus
 

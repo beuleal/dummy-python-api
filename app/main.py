@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
-import random
-import time
+import random, time, os
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 import json_logging
@@ -34,6 +33,7 @@ def get_random_response():
         return jsonify(responses["success"]), 200
     else:
         return jsonify(responses["error"]), random.choice(error_codes)
+
 
 def start_timer():
     request.start_time = time.time()
@@ -93,4 +93,6 @@ if __name__ == '__main__':
     app.before_request(start_timer)
     app.after_request(record_request_data)
     app.after_request(stop_timer)
-    app.run(debug=True, port=5000)
+
+    debug_mode = "DEBUG_MODE" in os.environ
+    app.run(debug=debug_mode, port=5000, host='0.0.0.0')

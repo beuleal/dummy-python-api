@@ -1,0 +1,11 @@
+# Docker compose was created only for a gracefully stopping as flask server ignore SIGTERM (Ctrl + C)
+version: "3.9"
+services:
+  dummy-python-api:
+    build: .
+    image: dummy-python-api
+    ports:
+      - "5000:5000"
+    stop_signal: SIGINT
+    # environment:
+    #   - DEBUG_MODE=False

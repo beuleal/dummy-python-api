@@ -14,7 +14,12 @@ ISORT = $(PYTHON) -m isort
 PYLINT = $(PYTHON) -m pylint
 BANDIT = $(PYTHON) -m bandit
 
-stop:
+.PHONY: up
+up:
+	docker compose up
+
+.PHONY: down
+down:
 	docker compose down
 
 .PHONY: clean
@@ -43,34 +48,10 @@ autoflake:
 autopep8: 
 	$(AUTOPEP8) --in-place $(FOLDER_PROJECT)/*.py $(args)
 
-.PHONY: isort
-isort: 
-	$(ISORT) "$(FOLDER_PROJECT)" $(args)
-
-.PHONY: lint
-lint: 
-	PYTHONPATH="$(PWD)/$(FOLDER_PROJECT)" $(PYLINT) $(args) "$(FOLDER_PROJECT)"
-
-.PHONY: bandit
-bandit: 
-	$(BANDIT) -r "$(FOLDER_PROJECT)" $(args)
-
-.PHONY: flake8
-flake8: 
-	$(PYTHON) -m flake8 "$(FOLDER_PROJECT)"
-
-.PHONY: test-ci
-test-ci: 
-	$(MAKE) test args=--junitxml=result.xml
-	$(PYTHON) -m coverage xml
-
 .PHONY: code-review
 code-review:
   
 	$(MAKE) autopep8
-	$(MAKE) bandit
-	$(MAKE) lint
-	# $(MAKE) flake8
 
 .PHONY: docker-tag
 docker-tag:
@@ -99,12 +80,12 @@ docker-build:
 
 .PHONY: docker-run
 docker-run:
-	docker run --rm ${IMAGE_NAME}
+	docker run --rm -p 5000:5000 ${IMAGE_NAME}
 
 .PHONY: run
 run:
-	poetry run python app/main.py --debug
-
+	poetry run python app/main.py
+	
 .PHONY: run-local
 run-local:
 	poetry run python app/main.py --debug --no-reload
