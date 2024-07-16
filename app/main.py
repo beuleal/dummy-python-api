@@ -3,7 +3,14 @@ import random
 import time
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
+import json_logging
+
+
 app = Flask(__name__)
+
+# Define the log to use json
+json_logging.init_flask(enable_json=True)
+json_logging.init_request_instrument(app)
 
 # Define possible responses
 responses = {
@@ -66,7 +73,7 @@ def delete_resource():
 
 @app.route('/api/resource', methods=['PATCH'])
 def patch_resource():
-    data = request.json
+    request.json
     return get_random_response()
 
 
@@ -86,5 +93,4 @@ if __name__ == '__main__':
     app.before_request(start_timer)
     app.after_request(record_request_data)
     app.after_request(stop_timer)
-
     app.run(debug=True, port=5000)
