@@ -4,6 +4,7 @@ services:
   dummy-python-api:
     build: .
     image: dummy-python-api
+    container_name: dummy-python-api
     ports:
       - "5000:5000"
     stop_signal: SIGINT
